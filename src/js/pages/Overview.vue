@@ -1,10 +1,9 @@
 <template>
     <div>
-        <recommendations></recommendations>
+        <h1> Teste </h1>
     </div>
 </template>
 <script>
-    import Recommendations from "../components/Recommendations.vue";
 
     export default {
         computed: {
@@ -12,8 +11,6 @@
                 return `Teste`
             }
         },
-        components: {
-            "recommendations": Recommendations,
-        }
+        components: {}
     }
 </script>

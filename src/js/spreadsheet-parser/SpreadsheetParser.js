@@ -1,10 +1,11 @@
 class SpreadsheetParser {
 
-    constructor(data) {
+    constructor(data, adapter) {
 
         this.title = data.feed.title.$t;
         this.lastUpdate = data.feed.updated.$t;
         this.href = data.feed.link[0].href;
+        console.log(adapter);
 
         this.rows = data.feed.entry.map(entry => {
             return {

@@ -14,7 +14,9 @@ chrome.runtime.onMessage.addListener(function(request) {
         Vue.use(Vuex);
 
         const store = new Vuex.Store({
-            state: {},
+            state: {
+                configs: {}
+            },
             mutations: {}
         });
 
@@ -29,7 +31,6 @@ chrome.runtime.onMessage.addListener(function(request) {
                 "app": App
             }
         });
-
    }
 });
 
