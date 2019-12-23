@@ -1,0 +1,4 @@
+show_title: false
+
+gems:
+  - jemoji
