@@ -9,6 +9,7 @@
         data() {
             return {
                 data: {},
+                isLoading: null,
                 search: null,
                 configs: {
                     tabs: [{
@@ -37,10 +38,15 @@
             "extension-header": ExtensionHeader
         },
         mounted() {
+            this.isLoading = true;
             axios
                 .get(`https://spreadsheets.google.com/feeds/cells/${this.configs.tabs[0].id}/1/public/full?alt=json`)
                 .then(response => new SpreadsheetParser(response.data, this.configs.tabs[0].layout.adapter))
                 .then(spreadsheet => this.data = spreadsheet)
+                .finally(response => {
+                    this.isLoading = false;
+                    return response;
+                })
         }
     };
 </script>
@@ -51,7 +57,10 @@
     <div>
         <extension-header :title="this.data.title" :theme="this.configs.tabs[0].theme" :link="this.link"></extension-header>
 
-        <div class="section container" style="margin-top: -40px;">
+        <div class="section container" style="margin-top: -40px;" v-if="this.isLoading === true">
+            <p class="title is-4">Carregando...</p>
+        </div>
+        <div class="section container" style="margin-top: -40px;" v-else>
 
             <div class="field is-horizontal" style="padding-bottom: 0; padding-top: 20px;">
                 <div class="field-label is-normal">
