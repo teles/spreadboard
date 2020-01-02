@@ -5,6 +5,7 @@ class SpreadsheetParser {
         this.title = data.feed.title.$t;
         this.lastUpdate = data.feed.updated.$t;
         this.href = data.feed.link[0].href;
+        this.id = this.href.match(/\/d\/([^/]*)/)[1];
 
         this.rows = data.feed.entry.map(entry => {
             return {

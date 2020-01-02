@@ -3,27 +3,46 @@
 
     export default {
         name: "ExtensionHeader",
-        data () {
+        data() {
             return data;
         },
-        props: ["title", "theme", "link"]
+        methods: {
+            isThisBoardActive(boardId) {
+                return boardId === this.$route.params.id;
+            }
+        },
+        computed: {
+            title() {
+                return this.$route.params.id ? this.activeBoard.title : "Home";
+            },
+            isHome() {
+                return this.activeBoard === null;
+            },
+            boards() {
+                return this.$store.state.boards;
+            },
+            activeBoard() {
+                return this.$route.params.id ? this.$store.state.boards.find(board => board.id === this.$route.params.id) : null;
+            }
+        }
     }
 </script>
 
 <template>
-    <header class="hero" v-bind:class="{'is-success': theme === 'green', 'is-warning': theme === 'yellow', 'is-danger': theme === 'red' }">
+    <header class="hero is-info">
         <div class="hero-body">
-            <h1 class="title is-3">{{this.title}}</h1>
-            <a v-if="this.link" :href="this.link" target="_blank">editar</a>
+            <h1 class="title is-3">{{ this.title }}</h1>
         </div>
         <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth">
                 <div class="container">
                     <ul>
-                        <li class="is-active"><a>{{this.title}}</a></li>
-                        <li><a>Exemplo</a></li>
-                        <li><a>Exemplo</a></li>
-                        <li><a>Exemplo</a></li>
+                        <li v-bind:class="{ 'is-active': isHome}">
+                            <router-link :to="{name: 'home' }">&#9881;</router-link>
+                        </li>
+                        <li v-for="board in this.boards" v-bind:class="{ 'is-active': isThisBoardActive(board.id)}">
+                            <router-link :to="{ name: 'board', params: { id: board.id }}">{{board.title}}</router-link>
+                        </li>
                     </ul>
                 </div>
             </nav>

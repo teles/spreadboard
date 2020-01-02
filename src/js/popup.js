@@ -15,9 +15,19 @@ chrome.runtime.onMessage.addListener(function(request) {
 
         const store = new Vuex.Store({
             state: {
-                configs: {}
+                configs: {},
+                boards: []
             },
-            mutations: {}
+            mutations: {
+                updateBoards(state, boards) {
+                    state.boards = boards;
+                }
+            },
+            getters: {
+                boardById: (state, id) => {
+                    return state.boards.find(board => board.id === id);
+                }
+            }
         });
 
         const router = new VueRouter({routes});
@@ -41,8 +51,6 @@ function onLoadWindow(){
         file: "./get-page-source.bundle.js"
     }, function(){
         if (chrome.runtime.lastError) {
-            // title.innerText = "Ocorreu um erro ao injetar script";
-            // subtitle.innerText = chrome.runtime.lastError.message;
             main.innerHTML = "";
         }
     });
