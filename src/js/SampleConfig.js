@@ -13,7 +13,7 @@ const SampleConfig = {
         theme: "yellow",
         layout: {
             type: "cards",
-            adapter: {"title": "título", "text": "Definição", "more": "link"}
+            adapter: {"title": "título", "text": "descricao", "more": "link"}
         }
     }]
 };
