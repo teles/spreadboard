@@ -1,17 +1,17 @@
 <template>
     <div class="section">
         <div v-for="row in activeBoard.rows" style="margin-bottom: 20px;">
-            <component v-bind:is="default" :data="row"></component>
+            <component v-bind:is="basic" :data="row"></component>
         </div>
     </div>
 </template>
 <script>
-    import Default from "../templates/Default.vue";
+    import Basic from "../templates/Basic.vue";
 
     export default {
         data() {
             return {
-                default: Default
+                basic: Basic
             }
         },
         computed: {
