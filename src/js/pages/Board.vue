@@ -1,7 +1,7 @@
 <template>
     <div class="section">
         <div v-for="row in activeBoard.rows" style="margin-bottom: 20px;">
-            <component v-bind:is="template[row.$configs.template]" :data="row"></component>
+            <component v-bind:is="template[activeBoard.$configs.template]" :data="row"></component>
         </div>
     </div>
 </template>

@@ -6,6 +6,15 @@ class SpreadsheetParser {
         this.lastUpdate = data.feed.updated.$t;
         this.href = data.feed.link[0].href;
         this.id = this.href.match(/\/d\/([^/]*)/)[1];
+        this.$configs = {
+            template: tab.template || "basic",
+            adapter: tab.adapter || data.filter(item => item.row === "1")
+                .map(item => item.content)
+                .reduce((total, key) => {
+                    total[key] = key;
+                    return total;
+                }, {})
+        };
 
         this.rows = data.feed.entry.map(entry => {
             return {
@@ -13,14 +22,7 @@ class SpreadsheetParser {
                 column: entry.gs$cell.col,
                 content: entry.gs$cell.$t
             };
-        }).reduce(function (total, current, index, data) {
-
-            const adapter = tab.adapter || data.filter(item => item.row === "1")
-                .map(item => item.content)
-                .reduce((total, key) => {
-                    total[key] = key;
-                    return total;
-                }, {});
+        }).reduce((total, current, index, data) => {
 
             if (current.row > 1) {
                 current.row--;
@@ -34,15 +36,10 @@ class SpreadsheetParser {
                 }
                 row[key] = current.content;
 
-
-                row.$data = Object.keys(adapter).reduce((total, key) => {
-                    total[key] = row[adapter[key]] || null;
+                row.$data = Object.keys(this.$configs.adapter).reduce((total, key) => {
+                    total[key] = row[this.$configs.adapter[key]] || null;
                     return total;
                 }, {});
-
-                row.$configs = {
-                    template: tab.template || "basic"
-                };
             }
 
             return total;
