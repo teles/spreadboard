@@ -12,8 +12,8 @@ const SampleConfig = {
         orderBy: "title",
         theme: "yellow",
         layout: {
-            type: "cards",
-            adapter: {"title": "título", "text": "descricao", "more": "link"}
+            type: "boxes-plus-image",
+            adapter: {"title": "título", "text": "descricao", "more": "link", "image": "capa"}
         }
     }]
 };

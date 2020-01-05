@@ -29,9 +29,12 @@
 </script>
 
 <template>
-    <header class="hero is-info">
+    <header class="hero is-info is-bold">
         <div class="hero-body">
             <h1 class="title is-3">{{ this.title }}</h1>
+            <h2 class="subtitle is-6" v-if="false">
+                <a class="is-link" href="https://www.google.com.br">editar</a>
+            </h2>
         </div>
         <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth">
