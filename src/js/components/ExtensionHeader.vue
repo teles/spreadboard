@@ -27,14 +27,23 @@
         }
     }
 </script>
+<style>
+    .is-link--dotted:hover {
+        border-bottom: 1px dotted #fff;
+    }
+</style>
 
 <template>
     <header class="hero is-info is-bold">
         <div class="hero-body">
             <h1 class="title is-3">{{ this.title }}</h1>
-            <h2 class="subtitle is-6" v-if="false">
-                <a class="is-link" href="https://www.google.com.br">editar</a>
+            <h2 class="subtitle is-6">
+                <a class="is-link is-link--dotted" v-if="isHome === false"
+                   v-bind:href="'https://docs.google.com/spreadsheets/d/' + activeBoard.id + '/edit'"
+                target="_blank">editar</a>
+                <span v-else class="is-link">&nbsp;</span>
             </h2>
+
         </div>
         <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth">

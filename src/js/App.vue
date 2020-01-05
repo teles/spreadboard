@@ -47,7 +47,7 @@
 <template>
     <div>
         <extension-header></extension-header>
-        <div class="section container" style="margin-top: -40px;" v-if="this.isLoading === true">
+        <div class="section" v-if="this.isLoading === true">
             <p class="title is-4">Carregando...</p>
         </div>
         <div v-else>
