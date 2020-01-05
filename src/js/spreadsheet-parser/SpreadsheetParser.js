@@ -7,6 +7,7 @@ class SpreadsheetParser {
         this.href = data.feed.link[0].href;
         this.id = this.href.match(/\/d\/([^/]*)/)[1];
         this.$configs = {
+            theme: tab.theme || "info",
             template: tab.template || "basic",
             adapter: tab.adapter || data.filter(item => item.row === "1")
                 .map(item => item.content)

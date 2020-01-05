@@ -12,6 +12,18 @@
             }
         },
         computed: {
+            headerClass() {
+                const headerClassMap = {
+                    "primary": "is-primary",
+                    "info": "is-info",
+                    "success": "is-success",
+                    "warning": "is-warning",
+                    "danger": "is-danger",
+                    "light": "is-light",
+                    "dark": "is-dark"
+                };
+                return this.isHome !== true ? headerClassMap[this.activeBoard.$configs.theme] : "is-info";
+            },
             title() {
                 return this.$route.params.id ? this.activeBoard.title : "Home";
             },
@@ -34,7 +46,7 @@
 </style>
 
 <template>
-    <header class="hero is-info is-bold">
+    <header class="hero" v-bind:class="headerClass">
         <div class="hero-body">
             <h1 class="title is-3">{{ this.title }}</h1>
             <h2 class="subtitle is-6">
