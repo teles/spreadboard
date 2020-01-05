@@ -1,6 +1,6 @@
 class SpreadsheetParser {
 
-    constructor(data, adapter = null) {
+    constructor(data, tab = {}) {
 
         this.title = data.feed.title.$t;
         this.lastUpdate = data.feed.updated.$t;
@@ -15,6 +15,13 @@ class SpreadsheetParser {
             };
         }).reduce(function (total, current, index, data) {
 
+            const adapter = tab.adapter || data.filter(item => item.row === "1")
+                .map(item => item.content)
+                .reduce((total, key) => {
+                    total[key] = key;
+                    return total;
+                }, {});
+
             if (current.row > 1) {
                 current.row--;
                 let row = total.find(item => item.$id === current.row) || {};
@@ -27,19 +34,15 @@ class SpreadsheetParser {
                 }
                 row[key] = current.content;
 
-                if (adapter === null) {
-                    adapter = data.filter(item => item.row === "1")
-                        .map(item => item.content)
-                        .reduce((total, key) => {
-                            total[key] = key;
-                            return total;
-                        }, {});
-                }
 
-                row.$adapted = Object.keys(adapter).reduce((total, key) => {
+                row.$data = Object.keys(adapter).reduce((total, key) => {
                     total[key] = row[adapter[key]] || null;
                     return total;
                 }, {});
+
+                row.$configs = {
+                    template: tab.template || "basic"
+                };
             }
 
             return total;

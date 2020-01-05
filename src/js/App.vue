@@ -29,7 +29,7 @@
                 .all(requests)
                 .then(axios.spread((one, two) => {
                     return [one, two].map((response, index) => {
-                        return new SpreadsheetParser(response.data, this.configs.tabs[index].layout.adapter);
+                        return new SpreadsheetParser(response.data, this.configs.tabs[index]);
                     });
                 })).then(boards => {
                     this.data = boards;

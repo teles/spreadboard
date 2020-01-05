@@ -4,16 +4,16 @@
          v-bind:style="{maxHeight: isExpanded ? '2000px' : '180px'}">
 
         <article class="media">
-            <div class="media-left" v-if="data.$adapted.image">
+            <div class="media-left" v-if="data.$data.image">
                 <figure class="image is-96x96">
-                    <img v-bind:src="data.$adapted.image"
-                         v-bind:alt="data.$adapted.title">
+                    <img v-bind:src="data.$data.image"
+                         v-bind:alt="data.$data.title">
                 </figure>
             </div>
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <strong>{{ data.$adapted.title }}</strong>
+                        <strong>{{ data.$data.title }}</strong>
                         <small>Capa Dura - 160 páginas</small>
                     </p>
                     <div
@@ -21,7 +21,7 @@
                          v-on:mouseleave="isHovered = false"
                          v-on:click="isExpanded = !isExpanded"
                          style="cursor: pointer;">
-                        <div v-html="data.$adapted.text"></div>
+                        <div v-html="data.$data.text"></div>
                     </div>
                 </div>
             </div>

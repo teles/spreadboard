@@ -1,11 +1,11 @@
 <template>
     <article class="message">
         <div class="message-header">
-            <p>{{data.$adapted.title}}</p>
+            <p>{{data.$data.title}}</p>
         </div>
         <div class="message-body">
-            <p>{{data.$adapted.text}}
-            <p>{{data.$adapted.more}}</p>
+            <p>{{data.$data.text}}
+            <p>{{data.$data.more}}</p>
         </div>
     </article>
 </template>
