@@ -8,13 +8,7 @@ class SpreadsheetParser {
         this.id = this.href.match(/\/d\/([^/]*)/)[1];
         this.$configs = {
             theme: tab.theme || "info",
-            template: tab.template || "basic",
-            adapter: tab.adapter || data.filter(item => item.row === "1")
-                .map(item => item.content)
-                .reduce((total, key) => {
-                    total[key] = key;
-                    return total;
-                }, {})
+            template: tab.template || "basic"
         };
 
         this.rows = data.feed.entry.map(entry => {
@@ -24,12 +18,18 @@ class SpreadsheetParser {
                 content: entry.gs$cell.$t
             };
         }).reduce((total, current, index, data) => {
+            this.$configs.adapter = tab.adapter || data.filter(item => item.row === "1")
+                .map(item => item.content)
+                .reduce((total, key) => {
+                    total[key] = `{{${key}}}`;
+                    return total;
+                }, {});
 
             if (current.row > 1) {
                 current.row--;
                 let row = total.find(item => item.$id === current.row) || {};
 
-                let key = data.find(item => item.column === current.column).content;
+                const key = data.find(item => item.column === current.column).content;
 
                 if (Object.keys(row).length === 0) {
                     row.$id = current.row;
@@ -38,7 +38,11 @@ class SpreadsheetParser {
                 row[key] = current.content;
 
                 row.$data = Object.keys(this.$configs.adapter).reduce((total, key) => {
-                    total[key] = row[this.$configs.adapter[key]] || null;
+                    const match = this.$configs.adapter[key].match(/{{([^\s]*)}}/i) || null;
+
+                    if (match !== null && row.hasOwnProperty(match[1])) {
+                        total[key] = this.$configs.adapter[key].replace(`{{${match[1]}}}`, row[match[1]]);
+                    }
                     return total;
                 }, {});
             }
