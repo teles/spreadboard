@@ -4,8 +4,8 @@
   <br>
 </p>
 <p align="center">
-  <strong>Spreadboard</strong>é uma extensão para o Google Chrome. O <strong>Spreadboard </strong> pretende facilitar o compartilhamento e visualização de dados armezanados em planilhas do Google Spreadsheets. 
-  <p> O Spreadboard oferece vários temas e templates para visualização dos seus dados </p>
+  <strong>Spreadboard</strong> é uma extensão para o Google Chrome. O <strong>Spreadboard </strong> pretende facilitar o compartilhamento e visualização de dados armezanados em planilhas do Google Spreadsheets. 
+  <span> O Spreadboard oferece vários temas e templates para visualização dos seus dados </span>
 </p>
 
 ## Tabela de conteúdos
