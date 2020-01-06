@@ -3,7 +3,7 @@ class SpreadsheetParser {
     constructor(data, tab = {}) {
 
         this.title = data.feed.title.$t;
-        this.lastUpdate = data.feed.updated.$t;
+        // this.lastUpdate = data.feed.updated.$t;
         this.href = data.feed.link[0].href;
         this.id = this.href.match(/\/d\/([^/]*)/)[1];
         this.$configs = {
@@ -38,11 +38,21 @@ class SpreadsheetParser {
                 row[key] = current.content;
 
                 row.$data = Object.keys(this.$configs.adapter).reduce((total, key) => {
-                    const match = this.$configs.adapter[key].match(/{{([^\s]*)}}/i) || null;
+                    const match = this.$configs.adapter[key].match(/{{(.*?)}}/i) || null;
+                    const matches = this.$configs.adapter[key]
+                        .match(/{{[^\s]*?}}/gi)
+                        .map(item => item.replace(/}}|{{/g, ""))
+                        .join("|");
 
                     if (match !== null && row.hasOwnProperty(match[1])) {
-                        total[key] = this.$configs.adapter[key].replace(`{{${match[1]}}}`, row[match[1]]);
+                        total[key] = this.$configs.adapter[key]
+                            .replace(new RegExp(`{{(${matches})}}`, "gi"), match => {
+                                match = match.replace("{{", "")
+                                    .replace("}}", "");
+                                return row[match] || "";
+                        });
                     }
+                    console.log(total);
                     return total;
                 }, {});
             }

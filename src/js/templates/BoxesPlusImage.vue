@@ -13,8 +13,8 @@
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <strong>{{ data.$data.title }}</strong>
-                        <small>Capa Dura - 160 páginas</small>
+                        <strong v-if="data.$data.title">{{data.$data.title}}</strong>
+                        <small v-if="data.$data.subtitle">{{data.$data.subtitle}}</small>
                     </p>
                     <div
                          v-on:mouseover="isHovered = true"
