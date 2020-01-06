@@ -3,9 +3,9 @@ class SpreadsheetParser {
     constructor(data, tab = {}) {
 
         this.title = data.feed.title.$t;
-        // this.lastUpdate = data.feed.updated.$t;
-        this.href = data.feed.link[0].href;
-        this.id = this.href.match(/\/d\/([^/]*)/)[1];
+        this.href = `${data.feed.link[0].href.match(/\/d\/([^/]*)/)[1]}`;
+        this.id = `${data.feed.link[0].href.match(/\/d\/([^/]*)/)[1]}_${tab.pageNumber || "1"}`;
+
         this.$configs = {
             theme: tab.theme || "info",
             template: tab.template || "basic"
@@ -52,7 +52,6 @@ class SpreadsheetParser {
                                 return row[match] || "";
                         });
                     }
-                    console.log(total);
                     return total;
                 }, {});
             }

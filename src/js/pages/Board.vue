@@ -9,13 +9,15 @@
 
     import Basic from "../templates/Basic.vue";
     import BoxesPlusImage from "../templates/BoxesPlusImage.vue";
+    import ListItem from "../templates/ListItem.vue";
 
     export default {
         data() {
             return {
                 template: {
                     "basic": Basic,
-                    "boxes-plus-image": BoxesPlusImage
+                    "boxes-plus-image": BoxesPlusImage,
+                    "list-item": ListItem
                 }
             }
         },

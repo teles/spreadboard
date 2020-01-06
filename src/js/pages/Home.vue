@@ -2,6 +2,7 @@
     <div class="section">
         <div v-for="(board, index) in boards">
             <p class="title is-5 has-text-info">{{index + 1}}) {{board.title}}</p>
+
             <div class="columns is-mobile">
                 <div class="column is-6">
                     <div class="field">
@@ -9,7 +10,7 @@
                         <div class="control">
                             <div class="select">
                                 <select>
-                                    <option>With options</option>
+                                    <option>{{board.$configs.template}}</option>
                                 </select>
                             </div>
                         </div>
@@ -21,7 +22,7 @@
                         <div class="control">
                             <div class="select">
                                 <select>
-                                    <option>With options</option>
+                                    <option>{{board.$configs.theme}}</option>
                                 </select>
                             </div>
                         </div>
