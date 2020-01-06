@@ -13,7 +13,6 @@
   * [Download](#download)
   * [Desenvolvendo](#desenvolvendo)
   * [Release notes](#release-notes)
-  * [Ideias para o futuro do Galileo SEO Assistant](#ideias-para-o-futuro-do-galileo-seo-assistant)
   * [Licença](#licença)
 
 ## Download
