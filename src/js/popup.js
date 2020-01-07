@@ -6,8 +6,6 @@ import Vuex from 'vuex/dist/vuex.esm'
 import routes from "./routes";
 import App from "./App.vue";
 
-let main;
-
 chrome.runtime.onMessage.addListener(function(request) {
    if(request.action === "getPageSource"){
         Vue.use(VueRouter);
@@ -45,15 +43,9 @@ chrome.runtime.onMessage.addListener(function(request) {
 });
 
 function onLoadWindow(){
-    main = document.querySelector("[data-selector='main']");
-
     chrome.tabs.executeScript(null, {
         file: "./get-page-source.bundle.js"
-    }, function(){
-        if (chrome.runtime.lastError) {
-            main.innerHTML = "";
-        }
-    });
+    }, function(){});
 }
 
 window.onload = onLoadWindow;
