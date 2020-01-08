@@ -1,5 +1,6 @@
 <script>
     let data = {};
+    import ApplicationSettings from "../ApplicationSettings.js";
 
     export default {
         name: "ExtensionHeader",
@@ -13,15 +14,10 @@
         },
         computed: {
             headerClass() {
-                const headerClassMap = {
-                    "primary": "is-primary",
-                    "info": "is-info",
-                    "success": "is-success",
-                    "warning": "is-warning",
-                    "danger": "is-danger",
-                    "light": "is-light",
-                    "dark": "is-dark"
-                };
+                const headerClassMap = Object.keys(ApplicationSettings.themes).reduce((total, key) => {
+                    total[key] = ApplicationSettings.themes[key].class;
+                    return total;
+                }, {});
                 return this.isHome !== true ? headerClassMap[this.activeBoard.$configs.theme] : "is-info";
             },
             title() {

@@ -21,8 +21,8 @@
                         <label class="label">Cor:</label>
                         <div class="control">
                             <div class="select">
-                                <select>
-                                    <option>{{board.$configs.theme}}</option>
+                                <select v-model="board.$configs.theme">
+                                    <option v-for="(theme, key) in themes" :value="key">{{key}}</option>
                                 </select>
                             </div>
                         </div>
@@ -48,11 +48,15 @@
     </div>
 </template>
 <script>
+    import ApplicationSettings from "../ApplicationSettings.js";
 
     export default {
         computed: {
             boards() {
                 return this.$store.state.boards;
+            },
+            themes() {
+                return ApplicationSettings.themes;
             }
         },
         components: {}

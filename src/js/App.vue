@@ -1,9 +1,9 @@
 <script>
 
+    import axios from "axios";
     import ExtensionHeader from "./components/ExtensionHeader.vue";
     import ExtensionFooter from "./components/ExtensionFooter.vue";
-    import SampleConfig from "./SampleConfig";
-    import axios from "axios";
+    import ApplicationSettings from "./ApplicationSettings.js";
     import SpreadsheetParser from "./spreadsheet-parser/SpreadsheetParser";
 
     export default {
@@ -12,7 +12,7 @@
             return {
                 isLoading: null,
                 search: null,
-                configs: SampleConfig
+                configs: ApplicationSettings.samples
             };
         },
         computed: {},
