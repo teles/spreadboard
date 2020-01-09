@@ -1,7 +1,17 @@
-const ApplicationSettings = {
-    templates: {
+import ApplicationTemplates from "./ApplicationTemplates";
 
-    },
+const camelCaseToKebabCase = (camelCaseString) => camelCaseString
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z])([A-Z])(?=[a-z])/g, "$1-$2")
+    .toLowerCase();
+
+const templatesToKebabCase = (templates) => Object.keys(templates).reduce((result, key) => {
+    result[camelCaseToKebabCase(key)] = templates[key];
+    return result;
+}, {});
+
+const ApplicationSettings = {
+    templates: templatesToKebabCase(ApplicationTemplates),
     themes: {
         "primary": {
             "class": "is-primary"

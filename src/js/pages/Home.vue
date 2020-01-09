@@ -1,35 +1,26 @@
 <template>
     <div class="section">
-        <div v-for="(board, index) in boards">
-            <p class="title is-5 has-text-info">{{index + 1}}) {{board.title}}</p>
-
+        <div v-for="(board, index) in boards" style="margin-bottom: 40px;">
+            <p class="title is-5 has-text-info">
+                <span>{{index + 1}}) {{board.title}}</span>
+                <small class="is-link"></small>
+            </p>
             <div class="columns is-mobile">
                 <div class="column is-6">
-                    <div class="field">
-                        <label class="label">Template:</label>
-                        <div class="control">
-                            <div class="select">
-                                <select>
-                                    <option>{{board.$configs.template}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <form-select-field
+                            :title="'Template'"
+                            :values="templates"
+                            :value="board.$configs.template">
+                    </form-select-field>
                 </div>
                 <div class="column is-6">
-                    <div class="field">
-                        <label class="label">Cor:</label>
-                        <div class="control">
-                            <div class="select">
-                                <select v-model="board.$configs.theme">
-                                    <option v-for="(theme, key) in themes" :value="key">{{key}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <form-select-field
+                            :title="'Cor'"
+                            :values="themes"
+                            :value="board.$configs.theme">
+                    </form-select-field>
                 </div>
             </div>
-
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
                 <tr>
@@ -40,7 +31,7 @@
                 <tbody>
                 <tr v-for="(value, item) in board.$configs.adapter">
                     <td>{{ item }}</td>
-                    <td>{{ value }}</td>
+                    <td contenteditable="true" @input="onInput">{{ value }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -49,6 +40,7 @@
 </template>
 <script>
     import ApplicationSettings from "../ApplicationSettings.js";
+    import FormSelectField from "../components/FormSelectField.vue";
 
     export default {
         computed: {
@@ -57,8 +49,18 @@
             },
             themes() {
                 return ApplicationSettings.themes;
+            },
+            templates() {
+                return ApplicationSettings.templates;
             }
         },
-        components: {}
+        methods: {
+            onInput(e) {
+                console.log(e.target.innerText);
+            },
+        },
+        components: {
+            FormSelectField
+        }
     }
 </script>

@@ -1,24 +1,18 @@
 <template>
     <div class="section">
         <div v-for="row in activeBoard.rows" style="margin-bottom: 20px;">
-            <component v-bind:is="template[activeBoard.$configs.template]" :data="row"></component>
+            <component v-bind:is="templates[activeBoard.$configs.template]" :data="row"></component>
         </div>
     </div>
 </template>
 <script>
 
-    import Basic from "../templates/Basic.vue";
-    import BoxesPlusImage from "../templates/BoxesPlusImage.vue";
-    import ListItem from "../templates/ListItem.vue";
+    import ApplicationSettings from "../ApplicationSettings.js";
 
     export default {
         data() {
             return {
-                template: {
-                    "basic": Basic,
-                    "boxes-plus-image": BoxesPlusImage,
-                    "list-item": ListItem
-                }
+                templates: ApplicationSettings.templates
             }
         },
         computed: {
