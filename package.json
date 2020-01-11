@@ -5,16 +5,14 @@
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
-    "test": "ava"
+    "test": "nyc --reporter=lcov --reporter=text-summary ava",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "ava": {
     "files": [
       "./src/**/*.specs.js"
     ],
-    "source": [
-      "./src/**/*.{js}",
-      "!./src/**/*.specs.js"
-    ],
+    "modules": true,
     "concurrency": 5,
     "failFast": true,
     "failWithoutAssertions": false,
@@ -38,6 +36,7 @@
     "html-loader": "0.4.5",
     "html-webpack-plugin": "2.24.1",
     "node-sass": "4.8.3",
+    "nyc": "^15.0.0",
     "sass-loader": "6.0.7",
     "style-loader": "0.13.0",
     "vue-loader": "14.2.2",
@@ -53,7 +52,6 @@
     "vue": "2.5.16",
     "vue-router": "3.0.1",
     "vue-template-compiler": "2.5.16",
-    "vuex": "3.0.1",
-    "xmldom": "0.1.27"
+    "vuex": "3.0.1"
   }
 }
