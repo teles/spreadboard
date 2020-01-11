@@ -40,8 +40,7 @@ const ApplicationSettings = {
             id: "1qQVqf4n9TBg1p1Uu7kDZyR3ApZUJYVs7XcuB7YuOVEc",
             adapter: {
                 "title": "Termo: {{Termo}}",
-                "text": "Definição: {{Definição}}",
-                "more": "{{Exemplo}}"
+                "text": "Definição: {{Definição}}"
             },
             template: "basic",
             theme: "warning"
