@@ -1,11 +1,10 @@
 <script>
-    let data = {};
     import ApplicationSettings from "../ApplicationSettings.js";
 
     export default {
         name: "ExtensionHeader",
         data() {
-            return data;
+            return {};
         },
         methods: {
             isThisBoardActive(boardId) {
@@ -30,6 +29,7 @@
                 return this.$store.state.boards;
             },
             activeBoard() {
+                console.log(this.$store.state.boards);
                 return this.$route.params.id ? this.$store.state.boards.find(board => board.id === this.$route.params.id) : null;
             }
         }

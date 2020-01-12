@@ -2,7 +2,7 @@ import test from "ava";
 import SpreadsheetParser from "./SpreadsheetParser.js";
 
 const generateJSONSpreadsheet = (data) => {
-    return JSON.parse(JSON.stringify({
+    return {
         "feed": {
             "title": {
                 "$t": data.title
@@ -22,7 +22,7 @@ const generateJSONSpreadsheet = (data) => {
                 });
             }).reduce((acc, val) => acc.concat(val), [])
         }
-    }));
+    };
 };
 
 const simpleSpreadsheetData = {
@@ -91,7 +91,6 @@ test("Consegue traduzir uma planilha simples", t => {
 test("Consegue entender uma configuracao basica", t => {
 
     const tab = {
-        "id": "1qQVqf4n9TBg1p1Uu7kDZyR3ApZUJYVs7XcuB7YuOVEc",
         "adapter": {
             "title": "Nome da pessoa: {{Nome}}",
             "text": "Idade do cabra: {{Idade}}"
@@ -158,7 +157,6 @@ test("Consegue entender espaços nas chaves da planilha", t => {
     };
 
     const tab = {
-        "id": "123",
         "adapter": {
             "title": "Tipo: {{Tipo de pessoa}}"
         }
@@ -167,5 +165,22 @@ test("Consegue entender espaços nas chaves da planilha", t => {
     const withSpacesSpreadsheet = new SpreadsheetParser(generateJSONSpreadsheet(plusSpacesSpreadsheetData), tab);
     t.is(withSpacesSpreadsheet.rows[0].$data.title, "Tipo: Boa");
     t.is(withSpacesSpreadsheet.rows[1].$data.title, "Tipo: Ok");
+
+});
+test("Encontra o id dado um pageNumber", t => {
+
+    const data = {
+        "entries": [
+            ["List"],
+            ["Item"]
+        ],
+        "title": "123 Empty",
+        "link": "https://docs.google.com/spreadsheets/d/123abc/pubhtml"
+    };
+    const spreadsheet = new SpreadsheetParser(generateJSONSpreadsheet(data));
+    t.is(spreadsheet.id, "123abc_1");
+
+    const spreadsheetWithPageNumber78 = new SpreadsheetParser(generateJSONSpreadsheet(data), {pageNumber: 78});
+    t.is(spreadsheetWithPageNumber78.id, "123abc_78");
 
 });
