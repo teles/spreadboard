@@ -40,7 +40,7 @@ class SpreadsheetParser {
                 row.$data = Object.keys(this.$configs.adapter).reduce((total, key) => {
                     const match = this.$configs.adapter[key].match(/{{(.*?)}}/i) || null;
                     const matches = this.$configs.adapter[key]
-                        .match(/{{[^\s]*?}}/gi)
+                        .match(/{{.*?}}/gi)
                         .map(item => item.replace(/}}|{{/g, ""))
                         .join("|");
 

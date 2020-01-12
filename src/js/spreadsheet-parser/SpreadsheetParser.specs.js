@@ -1,53 +1,41 @@
 import test from "ava";
 import SpreadsheetParser from "./SpreadsheetParser.js";
 
-const simpleSpreadsheet = {
-    feed: {
-        entry: [{
-            gs$cell: {
-                row: "1",
-                col: "1",
-                $t: "Nome"
-            }
-        }, {
-            gs$cell: {
-                row: "1",
-                col: "2",
-                $t: "Idade"
-            }
-        }, {
-            gs$cell: {
-                row: "2",
-                col: "1",
-                $t: "José Teles"
-            }
-        }, {
-            gs$cell: {
-                row: "2",
-                col: "2",
-                $t: "31"
-            }
-        }, {
-            gs$cell: {
-                row: "3",
-                col: "1",
-                $t: "Jesus de Nazare"
-            }
-        }, {
-            gs$cell: {
-                row: "3",
-                col: "2",
-                $t: "33"
-            }
-        }],
-        title: {
-            $t: "Sample Spreadsheet"
-        },
-        link: [{
-            href: "https://docs.google.com/spreadsheets/d/klh234j12h3412jh34KAJHSkdhjsk/pubhtml"
-        }]
-    }
+const generateJSONSpreadsheet = (data) => {
+    return JSON.parse(JSON.stringify({
+        "feed": {
+            "title": {
+                "$t": data.title
+            },
+            "link": [{
+                "href": data.link
+            }],
+            "entry": data.entries.map((row, rowIndex) => {
+                return row.map((column, columnIndex) => {
+                    return {
+                        "gs$cell": {
+                            "$t": column,
+                            "row": rowIndex + 1 + "",
+                            "col": columnIndex + 1 + ""
+                        }
+                    };
+                });
+            }).reduce((acc, val) => acc.concat(val), [])
+        }
+    }));
 };
+
+const simpleSpreadsheetData = {
+    "entries": [
+        ["Nome", "Idade"],
+        ["José Teles", "31"],
+        ["Jesus de Nazaré", "33"]
+    ],
+    "title": "Sample Spreadsheet",
+    "link": "https://docs.google.com/spreadsheets/d/klh234j12h3412jh34KAJHSkdhjsk/pubhtml"
+};
+
+const simpleSpreadsheet = generateJSONSpreadsheet(simpleSpreadsheetData);
 
 test("Consegue traduzir uma planilha simples", t => {
     const emptySpreadsheet = new SpreadsheetParser(simpleSpreadsheet);
@@ -74,9 +62,9 @@ test("Consegue traduzir uma planilha simples", t => {
             "Idade": "31"
         }, {
             "$id": 2,
-            "Nome": "Jesus de Nazare",
+            "Nome": "Jesus de Nazaré",
             "$data": {
-                "Nome": "Jesus de Nazare",
+                "Nome": "Jesus de Nazaré",
                 "Idade": "33"
             },
             "Idade": "33"
@@ -133,9 +121,9 @@ test("Consegue entender uma configuracao basica", t => {
             },
             {
                 "$id": 2,
-                "Nome": "Jesus de Nazare",
+                "Nome": "Jesus de Nazaré",
                 "$data": {
-                    "title": "Nome da pessoa: Jesus de Nazare",
+                    "title": "Nome da pessoa: Jesus de Nazaré",
                     "text": "Idade do cabra: 33"
                 },
                 "Idade": "33"
@@ -155,5 +143,29 @@ test("Consegue entender uma configuracao basica", t => {
         t.is(row.$data.text, expected.rows[index].$data.text);
         t.is(row.$data.title, expected.rows[index].$data.title);
     });
+
+});
+
+test("Consegue entender espaços nas chaves da planilha", t => {
+    const plusSpacesSpreadsheetData = {
+        "entries": [
+            ["Nome", "Idade", "Tipo de pessoa"],
+            ["Freddie Mercury", "51", "Boa"],
+            ["Rainha da Inglaterra", "80", "Ok"]
+        ],
+        "title": "Sample Spreadsheet",
+        "link": "https://docs.google.com/spreadsheets/d/123/pubhtml"
+    };
+
+    const tab = {
+        "id": "123",
+        "adapter": {
+            "title": "Tipo: {{Tipo de pessoa}}"
+        }
+    };
+
+    const withSpacesSpreadsheet = new SpreadsheetParser(generateJSONSpreadsheet(plusSpacesSpreadsheetData), tab);
+    t.is(withSpacesSpreadsheet.rows[0].$data.title, "Tipo: Boa");
+    t.is(withSpacesSpreadsheet.rows[1].$data.title, "Tipo: Ok");
 
 });

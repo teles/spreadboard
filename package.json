@@ -6,6 +6,7 @@
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
     "test": "nyc --reporter=lcov --reporter=text-summary ava",
+    "test-watch": "nyc --reporter=lcov --reporter=text-summary ava --watch",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "ava": {
