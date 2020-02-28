@@ -38,3 +38,9 @@ Verifique o [CHANGELOG](CHANGELOG.md) para acompanhar o status do desenvolviment
 ## Licença
 
 MIT - Jota Teles - 2020
+
+<details>
+  <summary>Copyright 1999-2018.</summary>
+  <p> - Teste.</p>
+  <p>Teste teste</p>
+</details>
